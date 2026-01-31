@@ -21,7 +21,7 @@ function App() {
             <button onClick={() => setIsSidebarOpen(true)} className="md:hidden p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
               <Menu className="w-6 h-6" />
             </button>
-            <span className="bg-surface px-2 py-1 rounded text-xs font-mono border border-border text-gray-400">MODEL: GEMINI-PRO</span>
+            <span className="bg-surface px-2 py-1 rounded text-xs font-mono border border-border text-gray-400">GEMINI-2.5-FLASH</span>
           </div>
         </header>
 
@@ -32,21 +32,21 @@ function App() {
                 <Sparkles className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold font-display text-white">Hacktiv8 Learning AI</h2>
-              <p className="text-gray-400 max-w-md text-sm md:text-base px-4">Siap membantu proses belajar coding kamu. Tanya apa saja tentang JavaScript, React, atau Database.</p>
+              <p className="text-gray-400 max-w-md text-sm md:text-base px-4">Siap membantu proses belajar coding kamu. Tanya apa saja!</p>
             </div>
           ) : (
-            <div className="max-w-3xl mx-auto w-full pt-4">
+            <div className="max-w-3xl mx-auto w-full pt-4 space-y-6">
               {messages.map((msg) => (
                 <ChatBubble key={msg.id} message={msg} />
               ))}
 
               {isLoading && (
-                <div className="flex justify-start w-full mb-6 gap-4">
+                <div className="flex justify-start w-full gap-4 animate-pulse">
                   <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center shrink-0">
-                    <Sparkles className="w-4 h-4 text-primary animate-spin" />
+                    <Sparkles className="w-4 h-4 text-primary" />
                   </div>
-                  <div className="bg-ai-bubble border border-border px-4 py-3 rounded-2xl rounded-tl-none">
-                    <span className="text-gray-400 text-sm animate-pulse">Sedang mengetik...</span>
+                  <div className="bg-surface/50 border border-border/50 px-4 py-3 rounded-2xl rounded-tl-none">
+                    <span className="text-gray-400 text-sm">Sedang mengetik...</span>
                   </div>
                 </div>
               )}

@@ -1,20 +1,28 @@
-import { pgTable, uuid, text, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 
-export const chats = pgTable("chats", {
+export const sessions = pgTable("sessions", {
   id: uuid("id").defaultRandom().primaryKey(),
+  guestId: text("guest_id").notNull(),
   title: text("title").notNull(),
-  userId: text("user_id").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const messages = pgTable("messages", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  chatId: uuid("chat_id")
-    .references(() => chats.id)
-    .notNull(),
-  role: text("role", { enum: ["user", "assistant"] }).notNull(),
+  id: serial("id").primaryKey(),
+  sessionId: uuid("session_id").references(() => sessions.id),
+  role: text("role").notNull(),
   content: text("content").notNull(),
-  metadata: jsonb("metadata"),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const sessionsRelations = relations(sessions, ({ many }) => ({
+  messages: many(messages),
+}));
+
+export const messagesRelations = relations(messages, ({ one }) => ({
+  session: one(sessions, {
+    fields: [messages.sessionId],
+    references: [sessions.id],
+  }),
+}));

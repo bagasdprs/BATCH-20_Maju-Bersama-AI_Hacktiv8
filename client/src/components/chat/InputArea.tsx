@@ -6,7 +6,6 @@ import { useEnterSubmit } from "../../hooks/useEnterSubmit";
 function InputArea() {
   const [input, setInput] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
   const { sendMessage, isLoading } = useChatStore();
 
   const handleSubmit = async () => {
@@ -22,7 +21,12 @@ function InputArea() {
     await sendMessage(messageToSend);
   };
 
-  const { handleKeyDown } = useEnterSubmit({ onSubmit: handleSubmit });
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -31,10 +35,10 @@ function InputArea() {
   };
 
   return (
-    <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 bg-linear-to-t from-background via-background to-transparent pb-6 md:pb-8 z-20">
-      <div className="max-w-3xl mx-auto">
-        <div className="relative flex items-end gap-2 p-2 bg-surface border border-border/50 rounded-2xl shadow-2xl shadow-black/50 focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/50 transition-all">
-          <button className="p-3 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-colors">
+    <div className="absolute bottom-0 left-0 w-full bg-linear-to-t from-background via-background to-transparent pt-12 pb-6 z-20">
+      <div className="max-w-3xl mx-auto px-4">
+        <div className="relative flex items-end gap-2 p-2 bg-surface border border-border/50 rounded-2xl shadow-2xl shadow-black/50 focus-within:border-primary/50 transition-all">
+          <button className="p-3 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-colors shrink-0">
             <Paperclip className="w-5 h-5" />
           </button>
 
@@ -44,13 +48,13 @@ function InputArea() {
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             placeholder="Kirim pesan ke Hacktiv8 AI..."
-            className="w-full bg-transparent text-white placeholder-gray-500 text-sm resize-none focus:outline-none max-h-32 py-3 custom-scrollbar font-sans"
+            className="w-full bg-transparent text-white placeholder-gray-500 text-sm md:text-base resize-none focus:outline-none max-h-32 py-3 custom-scrollbar font-sans leading-relaxed"
             rows={1}
-            disabled={isLoading} // Gabisa ngetik pas loading
+            disabled={isLoading}
             style={{ minHeight: "44px" }}
           />
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 shrink-0">
             <button className="hidden md:block p-3 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-colors">
               <Mic className="w-5 h-5" />
             </button>
@@ -58,14 +62,14 @@ function InputArea() {
             <button
               onClick={handleSubmit}
               disabled={isLoading || !input.trim()}
-              className="p-3 bg-primary hover:bg-orange-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-xl transition-all shadow-lg shadow-primary/20"
+              className="p-3 bg-primary hover:bg-orange-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center"
             >
               {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </button>
           </div>
         </div>
 
-        <p className="text-center text-xs text-gray-600 mt-3 font-mono">Hacktiv8 AI Learning Assistant. Check important info.</p>
+        <p className="text-center text-[10px] md:text-xs text-gray-600 mt-3 font-mono">Hacktiv8 AI dapat membuat kesalahan. Cek informasi penting.</p>
       </div>
     </div>
   );
