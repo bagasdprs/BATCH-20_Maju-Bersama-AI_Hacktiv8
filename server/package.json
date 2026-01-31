@@ -1,0 +1,51 @@
+{
+  "name": "gemini-chatbot-app",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@google/genai": "^1.38.0",
+    "@langchain/google-genai": "^2.1.13",
+    "bcryptjs": "^3.0.3",
+    "cheerio": "^1.2.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.3",
+    "langchain": "^1.2.15",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "pdf-parse": "^2.4.5",
+    "pg": "^8.17.2",
+    "pino": "^10.3.0",
+    "winston": "^3.19.0",
+    "winston-daily-rotate-file": "^5.0.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/hpp": "^0.2.7",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^25.1.0",
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
